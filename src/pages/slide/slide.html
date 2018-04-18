@@ -24,10 +24,10 @@
 
 <ion-content class="card-background-page">
 
-  <ion-card *ngFor="let image of images">
-    <img [src]="cardImage.src" />
-    <div class="card-title">{{cardImage.title}}</div>
-    <div class="card-subtitle">{{cardImage.subtitle}}</div>
+  <ion-card *ngFor="let image of cardImages">
+    <img [src]="cardImages.src" />
+    <div class="card-title">{{cardImages.title}}</div>
+    <div class="card-subtitle">{{cardImages.subtitle}}</div>
   </ion-card>
 
 </ion-content>

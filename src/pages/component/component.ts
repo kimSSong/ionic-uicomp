@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
-import {ActionSheetController, IonicPage, ModalController, NavController, NavParams, Platform} from 'ionic-angular';
+import {
+  ActionSheetController, AlertController, IonicPage, ModalController, NavController, NavParams,
+  Platform, ToastController
+} from 'ionic-angular';
+import {AccountInterface} from "../../Interface/account";
 
 /**
  * Generated class for the ComponentPage page.
@@ -15,8 +19,12 @@ import {ActionSheetController, IonicPage, ModalController, NavController, NavPar
 })
 export class ComponentPage {
 
+  private accountData = {} as AccountInterface;
+
   constructor(public navCtrl: NavController,
                 public actionsheetCtrl : ActionSheetController,
+                public alertCtrl:AlertController,
+                public toastCtrl : ToastController,
                 public platform : Platform,
                 public modalCtrl: ModalController,
                 public navParams: NavParams) {
@@ -83,5 +91,41 @@ export class ComponentPage {
 
   slide(){
     this.navCtrl.push("SlidePage");
+  }
+
+  promptAlert(){
+    let prompt = this.alertCtrl.create({
+      title: 'Login',
+      message: "이름과 E-Mail를 입력하세요",
+      inputs: [
+      { name: 'name', placeholder: 'Name 입력' },
+      { name: 'email', placeholder: 'Email 입력' },
+    ],
+      buttons: [
+      { text: '취소', handler: data => { console.log('Cancel clicked'); } }, {
+        text: '저장',
+        handler: data => {
+          this.accountData = { name : data.name, email : data.email
+          }
+          this.navCtrl.push('NavPage',{account:this.accountData});
+        }
+      }
+    ]
+  });
+    prompt.present();
+  }
+
+  toast(){
+    let toast = this.toastCtrl.create(
+      {
+        message:'졸려',
+        duration:3000,
+        position:'top',
+        showCloseButton: true,
+        closeButtonText: 'Ok'
+      }
+    );
+    toast.onDidDismiss((data)=>console.log("toast ..."+data));
+    toast.present();
   }
 }
