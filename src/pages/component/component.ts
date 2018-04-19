@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import {
-  ActionSheetController, AlertController, IonicPage, ModalController, NavController, NavParams,
+  ActionSheetController, AlertController, IonicPage, LoadingController, ModalController, NavController, NavParams,
   Platform, ToastController
 } from 'ionic-angular';
 import {AccountInterface} from "../../Interface/account";
+import {LoaderProvider} from "../../providers/loader/loader";
 
 /**
  * Generated class for the ComponentPage page.
@@ -26,6 +27,7 @@ export class ComponentPage {
                 public alertCtrl:AlertController,
                 public toastCtrl : ToastController,
                 public platform : Platform,
+                public loaderProvider: LoaderProvider,
                 public modalCtrl: ModalController,
                 public navParams: NavParams) {
   }
@@ -128,4 +130,13 @@ export class ComponentPage {
     toast.onDidDismiss((data)=>console.log("toast ..."+data));
     toast.present();
   }
+
+  loading(){
+    this.loaderProvider.show();
+
+    setTimeout(()=>{
+      this.loaderProvider.hide();
+    }, 3000);
+  }
+
 }
